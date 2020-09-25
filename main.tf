@@ -28,8 +28,6 @@ resource "aws_instance" "jaslinawsserver" {
 provisioner "remote-exec" {
     inline = [
      "touch /tmp/jaslin"
-     "touch /tmp/abhi"
-     "touch /tmp/ankita"
      ]
  connection {
     type     = "ssh"
