@@ -12,7 +12,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "jaslinawsserver" {
+resource "aws_instance" "myawsserver" {
   ami = "ami-0ec2192bf0ab56546"
   key_name = "lastday-jaslin"
   instance_type = "t2.micro"
