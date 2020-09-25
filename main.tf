@@ -12,8 +12,17 @@ provider "aws" {
   region = "us-east-1"
 }
 
+data "aws_ami" "example" {
+  most_recent      = true
+  owners           = ["self"]
+  filter {
+    name   = "name"
+    values = ["packer-jaslin-*"]
+  }
+}
+
 resource "aws_instance" "myawsserver" {
-  ami = "ami-0ec2192bf0ab56546"
+  ami = data.aws_ami.example.id
   key_name = "lastday-jaslin"
   instance_type = "t2.micro"
 
@@ -22,7 +31,7 @@ resource "aws_instance" "myawsserver" {
     Env = "Prod"
   }
   provisioner "local-exec" {
-    command = "echo The servers IP address is ${self.public_ip} && echo ${self.private_ip} myawsserver >> /etc/hosts"
+    command = "echo ${self.public_ip} > /etc/ansible/hosts"
   }
  
 provisioner "remote-exec" {
